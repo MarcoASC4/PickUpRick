@@ -48,8 +48,9 @@ function draw() {
     //This will change based on the size of the canvas.
     fill(255, 0, 0);
     var Characterx = volhistory.length/2
-    var yVal = map(volhistory[Characterx], 0, 1, height/2, 0) -25;
-    rect(Characterx -25, yVal, 50, 50);
+    var squareLength = 50;
+    var yVal = map(volhistory[Characterx], 0, 1, height/2, 0) -squareLength/2;
+    rect(Characterx -squareLength/2, yVal, squareLength, squareLength);
    // line(volhistory.length, 0, volhistory.length, height);
     //ellipse(100, 100, 200, vol * 200);
 }
