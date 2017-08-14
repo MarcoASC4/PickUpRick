@@ -17,7 +17,7 @@ function preload() {
 }
 
 function setup() {
-    createCanvas(600, 600);
+    createCanvas(200, 200);
     button = createButton('toggle');
     button.mousePressed(toggleSong);
     song.play();
@@ -25,26 +25,26 @@ function setup() {
 }
 
 function draw() {
-    background(0, 119, 190);
+    background(0);
     var vol = amp.getLevel();
     volhistory.push(vol);
     stroke(255);
     noFill();
     push();
     var currentY = map(vol, 0, 1, height, 0);
-    // translate(0, height / 2 - currentY);
+    translate(0, height / 2 - currentY);
     beginShape();
     for (var i = 0; i < volhistory.length; i++) {
-        var y = map(volhistory[i], 0, 1, height / 2, 0);
+        var y = map(volhistory[i], 0, 1, height, 0);
         vertex(i, y);
     }
     endShape();
     pop();
-    if (volhistory.length > width) {
+    if (volhistory.length > width - 50) {
         volhistory.splice(0, 1);
     }
 
-    // stroke(255, 0, 0);
-    // line(volhistory.length, 0, volhistory.length, height);
-    // //ellipse(100, 100, 200, vol * 200);
+    stroke(255, 0, 0);
+    line(volhistory.length, 0, volhistory.length, height);
+    //ellipse(100, 100, 200, vol * 200);
 }
