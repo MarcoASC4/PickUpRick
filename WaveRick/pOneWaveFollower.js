@@ -22,6 +22,7 @@ function setup() {
     button.mousePressed(toggleSong);
     song.play();
     amp = new p5.Amplitude();
+    rectMode(CORNER);
 }
 
 function draw() {
@@ -38,6 +39,7 @@ function draw() {
         var y = map(volhistory[i], 0, 1, height/2, 0);
         vertex(i, y);
     }
+    fill(0, 0,255);
     endShape();
     pop();
     if (volhistory.length > width) {
@@ -45,5 +47,9 @@ function draw() {
     }
     //This will change based on the size of the canvas.
     fill(255, 0, 0);
-   
+    var Characterx = volhistory.length/2
+    var yVal = map(volhistory[Characterx], 0, 1, height/2, 0) -25;
+    rect(Characterx -25, yVal, 50, 50);
+   // line(volhistory.length, 0, volhistory.length, height);
+    //ellipse(100, 100, 200, vol * 200);
 }
