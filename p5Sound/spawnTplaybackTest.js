@@ -6,6 +6,7 @@ How to make spawning sharks! Make sure the trash and sharks aren't on the same x
 
 
 /* What we now know is that if the song is slowed down. The game will be longer. We want the square to move faster. So the game doesn' take that long.
+You can play 2 songs at once. Just use load sound with the same file address again. 
 
 */
 
@@ -21,12 +22,13 @@ var TrashArray = [];
 var volhistory = [];
 // A boolean that tells stuff to spawn after the ocean is completely drawn.
 var startSpawners;
+var newSong;
 
 function toggleSong() {
-    if (song.isPlaying()) {
-        song.pause();
+    if (newSong.isPlaying()) {
+        newSong.pause();
     } else {
-        song.play();
+        newSong.play();
     }
 }
 
@@ -46,6 +48,7 @@ function setup() {
     probability = false;
     startSpawners = false;
     song.rate(1);
+   
 }
 
 
