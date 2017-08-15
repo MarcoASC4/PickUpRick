@@ -35,7 +35,7 @@ function draw() {
     rect(x, y, 50, 50);
 }
 
- 
+
 function keyPressed() {
     if (key == ' ' && !moveDown) {
         moveUp = true;
