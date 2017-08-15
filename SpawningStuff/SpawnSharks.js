@@ -4,6 +4,13 @@ How to make spawning sharks! Make sure the trash and sharks aren't on the same x
 
 */
 
+
+/*
+Added playback rate To this. 
+*/
+
+
+
 var song;
 var amp;
 var button;
@@ -11,8 +18,10 @@ var firstIndexY;
 var secondIndexY;
 // true or false variable that tells the computer to put trash or not.
 var probabilityTrash;
+var probabilitySharks;
 // An array that holds the x values of the trash. The y values are calculated with map();
-var TrashArray = [];
+var SpawnerArray = [];
+
 var volhistory = [];
 // A boolean that tells stuff to spawn after the ocean is completely drawn.
 var startSpawners;
@@ -39,16 +48,20 @@ function setup() {
     firstIndexY = 0;
     secondIndexY = 0;
     probabilityTrash = false;
+    probabilitySharks = false;
     startSpawners = false;
 }
 
 
 function P() {
     // This makes the function have really low probability. You might need to change this number.
-    if (Math.random()*1 < 0.00003) {
+    var prob = Math.random()*1;
+    if (prob < 0.00003) {
         probabilityTrash = true;
+    } else if (prob >= 0.00003 && prob < 0.00006) {
+        probabilitySharks = true;
     }
-    return probabilityTrash;
+
 }
 
 function draw() {
@@ -65,7 +78,7 @@ function draw() {
     for (var i = 0; i < volhistory.length; i++) {
         var y = map(volhistory[i], 0, 1, height / 2, 0);
         vertex(i, y);
-        probabilityTrash = P();
+        P();
         if (i === 0) {
            firstIndexY = y; 
         }
@@ -73,8 +86,13 @@ function draw() {
             secondIndexY = y;
             // If probability has been met then a new trash will spawn at the last index (all the way to the right on the canvas).
             if (probabilityTrash === true && startSpawners === true) {
+                SpawnerArray.push({num: i, trash: probabilityTrash, shark: false})
                 probabilityTrash = false;
-                TrashArray.push(i)
+            }
+            if (probabilitySharks === true && startSpawners === true) {
+                SpawnerArray.push({num: i, trash: false, shark: probabilitySharks})
+                probabilitySharks = false;
+                
             }
         }
     }
@@ -85,15 +103,23 @@ function draw() {
     pop();
     // This moves the trash to the next x value to the right.
     if (startSpawners === true) {
-        for (var i = 0; i <TrashArray.length; i++) {
+        for (var i = 0; i <SpawnerArray.length; i++) {
+            if (SpawnerArray[i].trash === true) {
             fill(255, 255, 0);
+        }
+        
+            if(SpawnerArray[i].shark === true) {
+                fill(130);
+            }
+        
+        
             // The indexes at TrashArray has the x values or indexes for volhistory which is used to calculuate the y value.
-            var y = map(volhistory[TrashArray[i]], 0, 1, height / 2, 0);
-            rect(TrashArray[i]-10, y -10, 20, 20);
-            TrashArray[i]-=1;
+            var y = map(volhistory[SpawnerArray[i].num], 0, 1, height / 2, 0);
+            rect(SpawnerArray[i].num-10, y -10, 20, 20);
+            SpawnerArray[i].num-=1;
             // If the trash has an x value of less than 0 it is spliced from the array.
-            if (TrashArray[i] < 0) {
-            TrashArray.splice(0, 1);  
+            if (SpawnerArray[i].num < 0) {
+            SpawnerArray.splice(0, 1);  
             }
         }
     }
