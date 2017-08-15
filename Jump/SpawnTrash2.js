@@ -1,7 +1,5 @@
-
 /*
 How to make spawning sharks! Make sure the trash and sharks aren't on the same x value (Non mvp version.);
-
 */
 var ypos = 0;
 var xpos = 0;
@@ -20,8 +18,7 @@ var volhistory = [];
 var startSpawners;
 var moveUp = false;
 var moveDown = false;
-var totalMoveUpDist = 100;
-
+var totalMoveUpDist = 300;
 function toggleSong() {
     if (song.isPlaying()) {
         song.pause();
@@ -29,12 +26,9 @@ function toggleSong() {
         song.play();
     }
 }
-
-
 function preload() {
     song = loadSound('test.mp3');
 }
-
 function setup() {
     createCanvas(600, 600);
     button = createButton('toggle');
@@ -46,8 +40,6 @@ function setup() {
     probability = false;
     startSpawners = false;
 }
-
-
 function P() {
     // This makes the function have really low probability. You might need to change this number.
     if (Math.random() * 1 < 0.00001) {
@@ -55,7 +47,6 @@ function P() {
     }
     return probability;
 }
-
 function draw() {
     background(0, 119, 190);
     var vol = amp.getLevel();
@@ -64,7 +55,6 @@ function draw() {
     push();
     var currentY = map(vol, 0, 1, height, 0);
     //translate(0, height / 2 - currentY);
-
     beginShape();
     stroke(0, 255, 0)
     for (var i = 0; i < volhistory.length; i++) {
@@ -107,12 +97,10 @@ function draw() {
     if (volhistory.length > width) {
         volhistory.splice(0, 1);
         startSpawners = true;
-
     }
     // if (TrashArray.length > width) {
     //     TrashArray.splice(0, 1);
     // }
-
     //This will change based on the size of the canvas.
     fill(255, 0, 0);
     if (followSong === true) {
@@ -123,11 +111,10 @@ function draw() {
         ypos = yVal;
         console.log(xpos,ypos)
         rect(Characterx - squareLength / 2, yVal, squareLength, squareLength);
-
     } else {
         if (moveUp===true) {
             //console.log("Going Up")
-            ypos -= 10;
+            ypos -= 5;
             totalMoveUpDist -= 10;
             if (totalMoveUpDist <= 0) {
                 moveUp = false;
@@ -135,19 +122,21 @@ function draw() {
             }
         }
         if (moveDown===true) {
-            ypos += 10;
+            ypos += 5;
             totalMoveUpDist+=10;
-            if (totalMoveUpDist >= 100) {
+            if (totalMoveUpDist >= 300) {
                 moveDown = false;
                 followSong = true;
             }
         }
         fill(255,0,0);
         rect(xpos, ypos, 50, 50);
-
     }
     //console.log(followSong)
 }
+
+
+
 function keyPressed() {
     if (key == ' ' && !moveDown) {
         moveUp = true;
