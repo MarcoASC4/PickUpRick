@@ -1,4 +1,4 @@
-
+  
 /*
 How to make spawning sharks! Make sure the trash and sharks aren't on the same x value (Non mvp version.);
 
