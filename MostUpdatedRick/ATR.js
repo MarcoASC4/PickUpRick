@@ -1,7 +1,9 @@
-
 /*
 How to make spawning sharks! Make sure the trash and sharks aren't on the same x value (Non mvp version.);
+
 */
+
+
 /*
 Added playback rate To this. 
 */
@@ -18,9 +20,12 @@ var probabilityTrash;
 var probabilitySharks;
 // An array that holds the x values of the trash. The y values are calculated with map();
 var SpawnerArray = [];
+
 var volhistory = [];
 // A boolean that tells stuff to spawn after the ocean is completely drawn.
 var startSpawners;
+var TrashCounter = 0;
+
 //From Phillip's Jump Code
 var ypos = 0;
 var xpos = 0;
@@ -28,6 +33,7 @@ var followSong = true;
 var moveUp = false;
 var moveDown = false;
 var totalMoveUpDist = 300;
+
 function toggleSong() {
     if (song.isPlaying()) {
         song.pause();
@@ -35,11 +41,14 @@ function toggleSong() {
         song.play();
     }
 }
+
+
 function preload() {
     // SoundCloud API would be in Preload. 
     soundFormats('mp3', 'ogg');
   song = loadSound(song[Math.floor(Math.random()*4)]);
 }
+
 function setup() {
     // Sets the size of the canvas to 600 by 600. Don't change this size yet because the
     // whole code is revolved around this size. I need to make a formula to make it better.
@@ -61,7 +70,10 @@ function setup() {
     // Makes the song 3 times as fast so the level is 3 times as fast.
     // Not the final level
     song.rate(1);
+
 }
+
+
 // These numbers may need to be lower
 function P() {
     // This makes the function have really low probability. You might need to change this number.
@@ -72,8 +84,11 @@ function P() {
     
         probabilitySharks = true;
     }
+
 }
+
 function draw() {
+
     background(0, 119, 190);
     // gives volume at this instance of the song.
     var vol = amp.getLevel();
@@ -96,6 +111,14 @@ function draw() {
     fill(0, 0, 255);
     endShape(CLOSE);
     pop();
+
+    //This will change based on the size of the canvas.
+    if (followSong === true) {
+        FollowGraph();
+    } else {
+        // Makes the red square jump
+        FollowJump();
+    }
     // This moves the trash to the next x value to the right.
     //Added
     CreateSpawner();
@@ -104,13 +127,6 @@ function draw() {
     // if (TrashArray.length > width) {
     //     TrashArray.splice(0, 1);
     // }
-    //This will change based on the size of the canvas.
-    if (followSong === true) {
-        FollowGraph();
-    } else {
-        // Makes the red square jump
-        FollowJump();
-    }
     
 }
 function keyPressed() {
@@ -136,16 +152,65 @@ function CreateSpawner() {
         
         
             // The indexes at TrashArray has the x values or indexes for volhistory which is used to calculuate the y value.
-            var y = map(volhistory[SpawnerArray[i].num], 0, 1, height / 2, 0);
-            rect(1+ 3*SpawnerArray[i].num - 10, y -10, 20, 20);
-            SpawnerArray[i].num-=1;
+            var y = map(volhistory[SpawnerArray[i].num], 0, 1, height / 2, 0) - 10;
+            var x = 1 + 3*SpawnerArray[i].num -10;
+            if (isTouching(x, y) === true) {
+                if (SpawnerArray[i].shark === false) {
+                    TrashCounter++;
+                }
+                SpawnerArray.splice(i, 1);
+                i--;
+            } else {
+                rect(x, y, 20, 20);
+                SpawnerArray[i].num-=1;
+            }
             // If the trash has an x value of less than 0 it is spliced from the array.
-            if (1 + 3*SpawnerArray[i].num < 0) {
+            if (x + 10 < 0) {
                 SpawnerArray.splice(0, 1);  
             }
         }
+        /// Score 
+        text(TrashCounter.toString(), 90, 30);
     }
 }
+
+
+function isTouching(x, y) {
+    var realDist = dist(xpos, ypos, x, y);
+    var idealDist = 0;
+    // helps calculate exact distances.
+    // This is for the angle.
+    var deltaX = x-xpos;
+    var deltaY = y-ypos;
+    var modX = Math.abs(deltaX);
+    var modY = Math.abs(deltaY);
+    // Gets the angles between both center pts
+    var angle = Math.atan(modY/modX)*180/PI
+    if (angle > 45) {
+        var idealposdisY = 25;
+        var idealposdisX =  idealposdisY/tan(angle*PI/180);
+        //For other square
+        angle = 90- angle;
+        var idealdisx = 10;
+        var idealdisy = idealdisx*Math.tan(angle*PI/180);
+        idealDist = Math.sqrt(Math.pow(idealposdisY, 2) + Math.pow(idealposdisX, 2)) + Math.sqrt(Math.pow(idealdisx, 2) + Math.pow(idealdisy, 2));
+    } else {
+        var idealposdisX = 25;
+        var idealposdisY = idealposdisX*tan(angle*PI/180);
+        angle = 90 - angle;
+        var idealdisy = 10;
+        var idealdisx = idealdisy/tan(angle*PI/180);
+        idealDist = Math.sqrt(Math.pow(idealposdisY, 2) + Math.pow(idealposdisX, 2)) + Math.sqrt(Math.pow(idealdisx, 2) + Math.pow(idealdisy, 2));
+    }
+
+    if(idealDist >= realDist) {
+        return true;
+
+    } else {
+        return false;
+    }
+}
+
 function WaveSplicer() {
     if (volhistory.length >= 200) {
         volhistory.splice(0, 1);
@@ -187,7 +252,8 @@ function FollowJump() {
         fill(255,0,0);
         rect(xpos, ypos, 50, 50);
 }
-function AddSpawner(i , y) {
+
+function AddSpawner(i ) {
         if (i === volhistory.length - 1) {
             // If probability has been met then a new trash will spawn at the last index (all the way to the right on the canvas).
             if (probabilityTrash === true && startSpawners === true) {
@@ -202,4 +268,7 @@ function AddSpawner(i , y) {
         }
 }
 
+
+
    
+
