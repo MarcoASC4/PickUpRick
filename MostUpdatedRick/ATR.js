@@ -26,6 +26,9 @@ var volhistory = [];
 var startSpawners;
 var TrashCounter = 0;
 const TRASHSUBTRACTER = 3;
+var aintOver = true;
+var endCounter = 0;
+var stupidVar = false;
 
 //From Phillip's Jump Code
 var ypos = 0;
@@ -34,7 +37,7 @@ var followSong = true;
 var moveUp = false;
 var moveDown = false;
 var totalMoveUpDist = 200;
-var stupidVar = false;
+
 
 function toggleSong() {
     if (song.isPlaying()) {
@@ -113,7 +116,7 @@ function draw() {
             volhistory.push(vol)
             stroke(0);
             push();
-
+            stroke(0, 255, 0);
             beginShape();
             stroke(0, 255, 0)
             // makes 200 vertexes
@@ -146,10 +149,49 @@ function draw() {
             //     TrashArray.splice(0, 1);
             // }
         }
-    } else if (stupidVar === false) {
+    } else { 
+        if (endCounter < 200) {
+            background(0, 119, 190);
+            modifiedDrawGraph();
+            // Modified version of follow line.
+            fill(255, 0, 0);
+            endCounter++;
+            var Characterx = endCounter;
+            var squareLength = 20;
+            xpos = 1 + Characterx * 3 - squareLength / 2;
+            var yVal = map(volhistory[Characterx], 0, 1, height / 2, 0) - 20;
+            ypos = yVal;
+            rect(1 + Characterx * 3 - squareLength / 2, yVal, squareLength, squareLength);
+        } else {
+            aintOver = false;
+        }
+
+
+        if (stupidVar === false && aintOver === false) {
         $("document").ready(endGame);
         stupidVar = true;
+
+        }
     }
+}
+
+
+function modifiedDrawGraph() {
+     // Modified version of the graph.
+            stroke(0);
+            push();
+            beginShape();
+            stroke(0, 255, 0);
+            for (var i = 0; i < 200; i++) {
+                var y = map(volhistory[i], 0, 1, height / 2, 0);
+                // formula to approximate 200 vertexes
+                vertex(1 + 3 * i, y);
+            }
+            vertex(width, height);
+            vertex(0, height);
+            fill(0, 0, 255);
+            endShape(CLOSE);
+            pop();
 }
 
 function endGame() {
@@ -266,7 +308,10 @@ function FollowGraph() {
     xpos = 1 + Characterx * 3 - squareLength / 2;
     var yVal = map(volhistory[Characterx], 0, 1, height / 2, 0) - 20;
     ypos = yVal;
-    rect(1 + Characterx * 3 - squareLength / 2, yVal, squareLength, squareLength);
+    if (song.isPlaying() === true) {
+        rect(1 + Characterx * 3 - squareLength / 2, yVal, squareLength, squareLength);
+        endCounter= Characterx;
+    }
 }
 
 
