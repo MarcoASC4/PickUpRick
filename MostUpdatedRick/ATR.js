@@ -25,6 +25,7 @@ var volhistory = [];
 // A boolean that tells stuff to spawn after the ocean is completely drawn.
 var startSpawners;
 var TrashCounter = 0;
+const TRASHSUBTRACTER = 20;
 
 //From Phillip's Jump Code
 var ypos = 0;
@@ -32,7 +33,7 @@ var xpos = 0;
 var followSong = true;
 var moveUp = false;
 var moveDown = false;
-var totalMoveUpDist = 300;
+var totalMoveUpDist = 200;
 var stupidVar = false;
 
 function toggleSong() {
@@ -151,7 +152,7 @@ function draw() {
 }
 
 function endGame() {
-    $("body").append("<h1 class='unPause'>Game Over</h1>");
+    $("body").append("<h1 class='unPause'>The song stopped. Game Over.</h1>");
 }
 function keyPressed() {
     if (keyCode === UP_ARROW && !moveDown) {
@@ -181,6 +182,13 @@ function CreateSpawner() {
             if (isTouching(x, y) === true) {
                 if (SpawnerArray[i].shark === false) {
                     TrashCounter++;
+                } else if (SpawnerArray[i].shark === true){
+                    if (TrashCounter - TRASHSUBTRACTER > 0) {
+                        console.log("Less trash");
+                        TrashCounter -= TRASHSUBTRACTER;
+                    } else {
+                        TrashCounter = 0;
+                    } 
                 }
                 SpawnerArray.splice(i, 1);
                 i--;
@@ -218,7 +226,7 @@ function isTouching(x, y) {
     // Gets the angles between both center pts
     var angle = Math.atan(modY / modX) * 180 / PI
     if (angle > 45) {
-        var idealposdisY = 25;
+        var idealposdisY = 10;
         var idealposdisX = idealposdisY / tan(angle * PI / 180);
         //For other square
         angle = 90 - angle;
@@ -226,7 +234,7 @@ function isTouching(x, y) {
         var idealdisy = idealdisx * Math.tan(angle * PI / 180);
         idealDist = Math.sqrt(Math.pow(idealposdisY, 2) + Math.pow(idealposdisX, 2)) + Math.sqrt(Math.pow(idealdisx, 2) + Math.pow(idealdisy, 2));
     } else {
-        var idealposdisX = 25;
+        var idealposdisX = 10;
         var idealposdisY = idealposdisX * tan(angle * PI / 180);
         angle = 90 - angle;
         var idealdisy = 10;
@@ -253,9 +261,9 @@ function WaveSplicer() {
 function FollowGraph() {
     fill(255, 0, 0);
     var Characterx = Math.floor(volhistory.length / 2);
-    var squareLength = 50;
+    var squareLength = 20;
     xpos = 1 + Characterx * 3 - squareLength / 2;
-    var yVal = map(volhistory[Characterx], 0, 1, height / 2, 0) - 25;
+    var yVal = map(volhistory[Characterx], 0, 1, height / 2, 0) - 20;
     ypos = yVal;
     rect(1 + Characterx * 3 - squareLength / 2, yVal, squareLength, squareLength);
 }
@@ -272,16 +280,16 @@ function FollowJump() {
         }
     }
     if (moveDown === true) {
-        ypos += 3;
+        ypos += 6;
         totalMoveUpDist += 10;
-        if (totalMoveUpDist >= 600) {
+        if (totalMoveUpDist >= 200) {
             moveDown = false;
             followSong = true;
-            totalMoveUpDist = 300;
+            totalMoveUpDist = 200;
         }
     }
     fill(255, 0, 0);
-    rect(xpos, ypos, 50, 50);
+    rect(xpos, ypos, 20, 20);
 }
 
 function AddSpawner(i) {
