@@ -179,7 +179,6 @@ function CreateSpawner() {
             var y = map(volhistory[SpawnerArray[i].num], 0, 1, height / 2, 0) - 10;
             var x = 1 + 3 * SpawnerArray[i].num - 10;
             if (isTouching(x, y) === true) {
-                
                 if (SpawnerArray[i].shark === false) {
                     TrashCounter++;
                 }
@@ -195,12 +194,7 @@ function CreateSpawner() {
             }
         }
         /// Score 
-        textSize(40);
-        text("Pick Up Rick", 20, 50)
-        
-        //text("Score : ", 330, 50)
-        textSize(45)
-        text("Score : " + TrashCounter.toString(), 350, 50);
+        text(TrashCounter.toString(), 90, 30);
     }
 }
 
