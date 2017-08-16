@@ -25,7 +25,7 @@ var volhistory = [];
 // A boolean that tells stuff to spawn after the ocean is completely drawn.
 var startSpawners;
 var TrashCounter = 0;
-const TRASHSUBTRACTER = 20;
+const TRASHSUBTRACTER = 3;
 
 //From Phillip's Jump Code
 var ypos = 0;
@@ -96,7 +96,7 @@ function P() {
     var prob = Math.random() * 1;
     if (prob < 0.0001) {
         probabilityTrash = true;
-    } else if (prob >= 0.0001 && prob < 0.0002) {
+    } else if (prob > 0.0001 && prob < 0.000125) {
 
         probabilitySharks = true;
     }
