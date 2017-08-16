@@ -1,11 +1,7 @@
 
-
 /*
 How to make spawning sharks! Make sure the trash and sharks aren't on the same x value (Non mvp version.);
-
 */
-
-
 /*
 Added playback rate To this. 
 */
@@ -22,11 +18,9 @@ var probabilityTrash;
 var probabilitySharks;
 // An array that holds the x values of the trash. The y values are calculated with map();
 var SpawnerArray = [];
-
 var volhistory = [];
 // A boolean that tells stuff to spawn after the ocean is completely drawn.
 var startSpawners;
-
 //From Phillip's Jump Code
 var ypos = 0;
 var xpos = 0;
@@ -34,7 +28,6 @@ var followSong = true;
 var moveUp = false;
 var moveDown = false;
 var totalMoveUpDist = 300;
-
 function toggleSong() {
     if (song.isPlaying()) {
         song.pause();
@@ -42,14 +35,11 @@ function toggleSong() {
         song.play();
     }
 }
-
-
 function preload() {
     // SoundCloud API would be in Preload. 
     soundFormats('mp3', 'ogg');
   song = loadSound(song[Math.floor(Math.random()*4)]);
 }
-
 function setup() {
     // Sets the size of the canvas to 600 by 600. Don't change this size yet because the
     // whole code is revolved around this size. I need to make a formula to make it better.
@@ -71,10 +61,7 @@ function setup() {
     // Makes the song 3 times as fast so the level is 3 times as fast.
     // Not the final level
     song.rate(1);
-
 }
-
-
 // These numbers may need to be lower
 function P() {
     // This makes the function have really low probability. You might need to change this number.
@@ -85,11 +72,8 @@ function P() {
     
         probabilitySharks = true;
     }
-
 }
-
 function draw() {
-
     background(0, 119, 190);
     // gives volume at this instance of the song.
     var vol = amp.getLevel();
@@ -120,7 +104,6 @@ function draw() {
     // if (TrashArray.length > width) {
     //     TrashArray.splice(0, 1);
     // }
-
     //This will change based on the size of the canvas.
     if (followSong === true) {
         FollowGraph();
@@ -163,7 +146,6 @@ function CreateSpawner() {
         }
     }
 }
-
 function WaveSplicer() {
     if (volhistory.length >= 200) {
         volhistory.splice(0, 1);
@@ -205,7 +187,6 @@ function FollowJump() {
         fill(255,0,0);
         rect(xpos, ypos, 50, 50);
 }
-
 function AddSpawner(i , y) {
         if (i === volhistory.length - 1) {
             // If probability has been met then a new trash will spawn at the last index (all the way to the right on the canvas).
