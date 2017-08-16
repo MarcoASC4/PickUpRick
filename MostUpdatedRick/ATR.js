@@ -45,6 +45,7 @@ function toggleSong() {
 
 
 function preload() {
+    // SoundCloud API would be in Preload. 
     soundFormats('mp3', 'ogg');
   song = loadSound(song[Math.floor(Math.random()*4)]);
 }
