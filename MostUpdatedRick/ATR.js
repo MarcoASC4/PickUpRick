@@ -12,7 +12,7 @@ Added playback rate To this.
 
 
 
-var song;
+var song = ['24kmagic.mp3', 'jeopardy.mp3', '30sec.mp3','30sec1.mp3'];
 var amp;
 var button;
 var firstIndexY;
@@ -45,7 +45,8 @@ function toggleSong() {
 
 
 function preload() {
-    song = loadSound('test.mp3');
+    soundFormats('mp3', 'ogg');
+  song = loadSound(song[Math.floor(Math.random()*4)]);
 }
 
 function setup() {
@@ -68,7 +69,7 @@ function setup() {
     startSpawners = false;
     // Makes the song 3 times as fast so the level is 3 times as fast.
     // Not the final level
-    song.rate(3);
+    song.rate(1);
 
 }
 
