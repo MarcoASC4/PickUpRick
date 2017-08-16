@@ -72,6 +72,7 @@ function setup() {
     console.log("I am playing");
     song.play();
 
+
     // The .8 is the smoothing function to make the function less bunched up.
     amp = new p5.Amplitude(.8);
     // Determines the Y of the graph at the farthest left side of the canvas.
@@ -96,7 +97,7 @@ function P() {
     var prob = Math.random() * 1;
     if (prob < 0.0001) {
         probabilityTrash = true;
-    } else if (prob > 0.0001 && prob < 0.000125) {
+    } else if (prob > 0.0001 && prob < 0.000133) {
 
         probabilitySharks = true;
     }
