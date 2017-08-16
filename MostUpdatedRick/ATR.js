@@ -1,4 +1,26 @@
 
+// Isaiah's Sound Code
+/*var mySound;
+var mySound = ['24kmagic.mp3', 'jeopardy.mp3', '30sec.mp3','30sec1.mp3']
+
+
+function preload() {
+  soundFormats('mp3', 'ogg');
+  mySound = loadSound(mySound[Math.floor(Math.random()*4)]);
+  console.log("Loading");
+  console.log(Math.random()*4);
+  
+}
+
+function setup() {
+  console.log("Loaded");
+  mySound.setVolume(0.5);
+  mySound.play();
+}
+
+function draw() {
+} */
+
 /*
 How to make spawning sharks! Make sure the trash and sharks aren't on the same x value (Non mvp version.);
 
