@@ -171,11 +171,13 @@ function CreateSpawner() {
             }
         }
         /// Score 
+        fill(255);
         textSize(40);
-        text("Pick Up Rick", 20, 50)
+        text("Pick Up Rick", 20, 50);
         
         //text("Score : ", 330, 50)
-        textSize(45)
+        fill(255);
+        textSize(45);
         text("Score : " + TrashCounter.toString(), 350, 50);
     }
 }
