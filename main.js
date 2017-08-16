@@ -35,7 +35,7 @@ function draw() {
     //translate(0, height / 2 - currentY);
     beginShape();
     for (var i = 0; i < volhistory.length; i++) {
-        var y = map(volhistory[i], 0, 1, height/2, 0);
+        var y = map(volhistory[i], 0, 1, height / 2, 0);
         vertex(i, y);
     }
     endShape();
@@ -45,5 +45,5 @@ function draw() {
     }
     //This will change based on the size of the canvas.
     fill(255, 0, 0);
-   
+
 }
