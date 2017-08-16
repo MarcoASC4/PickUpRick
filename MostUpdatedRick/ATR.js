@@ -1,4 +1,5 @@
 
+
 /*
 How to make spawning sharks! Make sure the trash and sharks aren't on the same x value (Non mvp version.);
 
@@ -102,28 +103,41 @@ function draw() {
         // formula to approximate 200 vertexes
         vertex(1 + 3*i, y);
         P();
-        if (i === 0) {
-           firstIndexY = y; 
-        }
-        if (i === volhistory.length - 1) {
-            secondIndexY = y;
-            // If probability has been met then a new trash will spawn at the last index (all the way to the right on the canvas).
-            if (probabilityTrash === true && startSpawners === true) {
-                SpawnerArray.push({num: i, trash: probabilityTrash, shark: false})
-                probabilityTrash = false;
-            }
-            if (probabilitySharks === true && startSpawners === true) {
-                SpawnerArray.push({num: i, trash: false, shark: probabilitySharks})
-                probabilitySharks = false;
-                
-            }
-        }
+        AddSpawner(i);
     }
     vertex(width, height);
     vertex(0, height);
     fill(0, 0, 255);
     endShape(CLOSE);
     pop();
+    // This moves the trash to the next x value to the right.
+    //Added
+    CreateSpawner();
+    // Makes sure trash spawns after the ocean is the length of the canvas.
+    WaveSplicer();
+    // if (TrashArray.length > width) {
+    //     TrashArray.splice(0, 1);
+    // }
+
+    //This will change based on the size of the canvas.
+    if (followSong === true) {
+        FollowGraph();
+    } else {
+        // Makes the red square jump
+        FollowJump();
+    }
+    
+}
+function keyPressed() {
+    if (keyCode === UP_ARROW && !moveDown) {
+        moveUp = true;
+        followSong = false;
+    }       
+}
+
+
+//Added
+function CreateSpawner() {
     // This moves the trash to the next x value to the right.
     if (startSpawners === true) {
         for (var i = 0; i <SpawnerArray.length; i++) {
@@ -146,31 +160,29 @@ function draw() {
             }
         }
     }
-    // Makes sure trash spawns after the ocean is the length of the canvas.
+}
+
+function WaveSplicer() {
     if (volhistory.length >= 200) {
         volhistory.splice(0, 1);
-        startSpawners = true;
-
-
-        
+        startSpawners = true; 
     }
-    // if (TrashArray.length > width) {
-    //     TrashArray.splice(0, 1);
-    // }
+}
 
-    //This will change based on the size of the canvas.
-    if (followSong === true) {
-        fill(255, 0,0);
+
+function FollowGraph() {
+     fill(255, 0,0);
         var Characterx = Math.floor(volhistory.length / 2);
         var squareLength = 50;
         xpos = 1+ Characterx*3- squareLength / 2;
         var yVal = map(volhistory[Characterx], 0, 1, height / 2, 0) - 25;
         ypos = yVal;
         rect(1 + Characterx*3 - squareLength / 2, yVal, squareLength, squareLength);
-        
-    } else {
-        // Makes the red square jump
-        if (moveUp===true) {
+}
+
+
+function FollowJump() {
+    if (moveUp===true) {
             
             ypos -= 6;
             totalMoveUpDist -= 10;
@@ -190,14 +202,21 @@ function draw() {
         }
         fill(255,0,0);
         rect(xpos, ypos, 50, 50);
+}
 
-    }
-    
+function AddSpawner(i , y) {
+        if (i === volhistory.length - 1) {
+            // If probability has been met then a new trash will spawn at the last index (all the way to the right on the canvas).
+            if (probabilityTrash === true && startSpawners === true) {
+                SpawnerArray.push({num: i, trash: probabilityTrash, shark: false})
+                probabilityTrash = false;
+            }
+            if (probabilitySharks === true && startSpawners === true) {
+                SpawnerArray.push({num: i, trash: false, shark: probabilitySharks})
+                probabilitySharks = false;
+                
+            }
+        }
 }
-function keyPressed() {
-    if (keyCode === UP_ARROW && !moveDown) {
-        moveUp = true;
-        followSong = false;
-    }       
-}
+
    
