@@ -5,6 +5,9 @@ How to make spawning sharks! Make sure the trash and sharks aren't on the same x
 /*
 Added playback rate To this. 
 */
+
+
+
 var song = ['24kmagic.mp3', 'jeopardy.mp3', '30sec.mp3','30sec1.mp3'];
 var amp;
 var button;
@@ -33,7 +36,6 @@ function toggleSong() {
     }
 }
 function preload() {
-    // SoundCloud API would be in Preload. 
     soundFormats('mp3', 'ogg');
   song = loadSound(song[Math.floor(Math.random()*4)]);
 }
@@ -116,6 +118,8 @@ function keyPressed() {
         followSong = false;
     }       
 }
+
+
 //Added
 function CreateSpawner() {
     // This moves the trash to the next x value to the right.
@@ -147,6 +151,8 @@ function WaveSplicer() {
         startSpawners = true; 
     }
 }
+
+
 function FollowGraph() {
      fill(255, 0,0);
         var Characterx = Math.floor(volhistory.length / 2);
@@ -156,6 +162,8 @@ function FollowGraph() {
         ypos = yVal;
         rect(1 + Characterx*3 - squareLength / 2, yVal, squareLength, squareLength);
 }
+
+
 function FollowJump() {
     if (moveUp===true) {
             
@@ -192,4 +200,5 @@ function AddSpawner(i , y) {
             }
         }
 }
+
    
