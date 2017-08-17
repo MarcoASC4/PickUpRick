@@ -1,6 +1,5 @@
 /*
 How to make spawning sharks! Make sure the trash and sharks aren't on the same x value (Non mvp version.);
-
 */
 
 
@@ -10,7 +9,7 @@ Added playback rate To this.
 
 
 
-var song = ['24kmagic.mp3', 'jeopardy.mp3', '30sec.mp3', '30sec1.mp3'];
+var song = ['24kmagic.mp3', 'jeopardy.mp3', '30sec.mp3', '30sec1.mp3', 'test.mp3'];
 var amp;
 var button;
 var firstIndexY;
@@ -63,7 +62,7 @@ function unPause() {
 function preload() {
     // SoundCloud API would be in Preload. 
     soundFormats('mp3', 'ogg');
-    song = loadSound(song[Math.floor(Math.random() * 4)]);
+    song = loadSound(song[Math.floor(Math.random() * 5)]);
 }
 
 function setup() {
@@ -149,7 +148,7 @@ function draw() {
             //     TrashArray.splice(0, 1);
             // }
         }
-    } else { 
+    } else {
         if (endCounter < 200) {
             background(0, 119, 190);
             modifiedDrawGraph();
@@ -168,8 +167,8 @@ function draw() {
 
 
         if (stupidVar === false && aintOver === false) {
-        $("document").ready(endGame);
-        stupidVar = true;
+            $("document").ready(endGame);
+            stupidVar = true;
 
         }
     }
@@ -177,21 +176,21 @@ function draw() {
 
 
 function modifiedDrawGraph() {
-     // Modified version of the graph.
-            stroke(0);
-            push();
-            beginShape();
-            stroke(0, 255, 0);
-            for (var i = 0; i < 200; i++) {
-                var y = map(volhistory[i], 0, 1, height / 2, 0);
-                // formula to approximate 200 vertexes
-                vertex(1 + 3 * i, y);
-            }
-            vertex(width, height);
-            vertex(0, height);
-            fill(0, 0, 255);
-            endShape(CLOSE);
-            pop();
+    // Modified version of the graph.
+    stroke(0);
+    push();
+    beginShape();
+    stroke(0, 255, 0);
+    for (var i = 0; i < 200; i++) {
+        var y = map(volhistory[i], 0, 1, height / 2, 0);
+        // formula to approximate 200 vertexes
+        vertex(1 + 3 * i, y);
+    }
+    vertex(width, height);
+    vertex(0, height);
+    fill(0, 0, 255);
+    endShape(CLOSE);
+    pop();
 }
 
 function endGame() {
@@ -225,13 +224,13 @@ function CreateSpawner() {
             if (isTouching(x, y) === true) {
                 if (SpawnerArray[i].shark === false) {
                     TrashCounter++;
-                } else if (SpawnerArray[i].shark === true){
+                } else if (SpawnerArray[i].shark === true) {
                     if (TrashCounter - TRASHSUBTRACTER > 0) {
                         console.log("Less trash");
                         TrashCounter -= TRASHSUBTRACTER;
                     } else {
                         TrashCounter = 0;
-                    } 
+                    }
                 }
                 SpawnerArray.splice(i, 1);
                 i--;
@@ -248,7 +247,7 @@ function CreateSpawner() {
         fill(255);
         textSize(40);
         text("Pick Up Rick", 20, 50);
-        
+
         //text("Score : ", 330, 50)
         fill(255);
         textSize(45);
@@ -310,7 +309,7 @@ function FollowGraph() {
     ypos = yVal;
     if (song.isPlaying() === true) {
         rect(1 + Characterx * 3 - squareLength / 2, yVal, squareLength, squareLength);
-        endCounter= Characterx;
+        endCounter = Characterx;
     }
 }
 
@@ -352,8 +351,3 @@ function AddSpawner(i) {
         }
     }
 }
-
-
-
-
-
