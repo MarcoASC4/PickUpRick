@@ -42,6 +42,7 @@ var moveDown = false;
 var totalMoveUpDist = 200;
 
 
+
 function toggleSong() {
     if (song.isPlaying()) {
         song.pause();
@@ -72,7 +73,7 @@ function setup() {
     // Sets the size of the canvas to 600 by 600. Don't change this size yet because the
     // whole code is revolved around this size. I need to make a formula to make it better.
     createCanvas(600, 600);
-    button = createButton('toggle');
+    button = createButton('pause');
     button.mousePressed(toggleSong);
     console.log("I am playing");
     song.play();
@@ -135,8 +136,8 @@ function MakeWave() {
 }
 
 function draw() {
-    if (song.isPlaying() === true) {
-        if (song.isPaused() === false) {
+    if (song.isPlaying() === true || song.isPaused() === true) {
+        if (song.isPlaying() === true) {
             background(0, 119, 190);
             MakeWave();
 
