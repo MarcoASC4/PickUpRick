@@ -11,11 +11,8 @@ Added playback rate To this.
 var song = ['Accapella.mp3', 'Bohemian.mp3', 'DJKhalid.mp3', 'speech.mp3'];
 //'24kmagic.mp3', 'jeopardy.mp3', '30sec.mp3', '30sec1.mp3', 'test.mp3', 'classical.mp3', 'TheWeekend.mp3'
 
-<<<<<<< HEAD
 var song;
-=======
-var song = ['24kmagic.mp3', 'jeopardy.mp3', '30sec.mp3', '30sec1.mp3', 'test.mp3'];
->>>>>>> 1315092f9da68c9190621d3d514df5c060134ce5
+
 var amp;
 var button;
 var firstIndexY;
@@ -68,11 +65,7 @@ function unPause() {
 
 function preload() {
     soundFormats('mp3', 'ogg');
-<<<<<<< HEAD
     song = loadSound(song[Math.floor(Math.random() * song.length)]);
-=======
-    song = loadSound(song[Math.floor(Math.random() * 5)]);
->>>>>>> 1315092f9da68c9190621d3d514df5c060134ce5
 }
 
 function setup() {
