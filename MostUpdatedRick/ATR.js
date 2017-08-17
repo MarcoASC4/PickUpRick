@@ -43,15 +43,7 @@ var totalMoveUpDist = 200;
 
 
 
-function toggleSong() {
-    if (song.isPlaying()) {
-        song.pause();
-        $("document").ready(pause);
-    } else {
-        song.play();
-        $("document").ready(unPause);
-    }
-}
+
 
 function pause() {
     $("body").append("<h1 class='unPause'>It is paused</h1>");
@@ -75,7 +67,6 @@ function setup() {
     createCanvas(600, 600);
     button = createButton('pause');
     button.mousePressed(toggleSong);
-    console.log("I am playing");
     song.play();
 
 
@@ -94,6 +85,18 @@ function setup() {
     // Not the final level
     song.rate(1);
 
+}
+
+
+function toggleSong() {
+    if (song.isPlaying()) {
+        console.log("I am pausing.")
+        song.pause();
+        pause();
+    } else {
+        song.play();
+        unPause();
+    }
 }
 
 
