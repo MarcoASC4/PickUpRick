@@ -9,8 +9,10 @@ Added playback rate To this.
 */
 
 
+var song = ['Accapella.mp3', 'Bohemian.mp3', 'DJKhalid.mp3', 'speech.mp3'];
+//'24kmagic.mp3', 'jeopardy.mp3', '30sec.mp3', '30sec1.mp3', 'test.mp3', 'classical.mp3', 'TheWeekend.mp3'
 
-var song = ['24kmagic.mp3', 'jeopardy.mp3', '30sec.mp3', '30sec1.mp3'];
+var song;
 var amp;
 var button;
 var firstIndexY;
@@ -29,6 +31,7 @@ const TRASHSUBTRACTER = 3;
 var aintOver = true;
 var endCounter = 0;
 var stupidVar = false;
+var downloadedMusic = "";
 
 //From Phillip's Jump Code
 var ypos = 0;
@@ -61,9 +64,8 @@ function unPause() {
 
 
 function preload() {
-    // SoundCloud API would be in Preload. 
     soundFormats('mp3', 'ogg');
-    song = loadSound(song[Math.floor(Math.random() * 4)]);
+    song = loadSound(song[Math.floor(Math.random() * song.length)]);
 }
 
 function setup() {
@@ -76,8 +78,8 @@ function setup() {
     song.play();
 
 
-    // The .8 is the smoothing function to make the function less bunched up.
-    amp = new p5.Amplitude(.8);
+    // The .5 is the smoothing function to make the function less bunched up.
+    amp = new p5.Amplitude(0.5);
     // Determines the Y of the graph at the farthest left side of the canvas.
     firstIndexY = 0;
     // Determines the Y of the graph at the farthest right side of the canvas
@@ -107,10 +109,8 @@ function P() {
 
 }
 
-function draw() {
-    if (song.isPlaying() === true) {
-        if (song.isPaused() === false) {
-            background(0, 119, 190);
+function MakeWave() {
+    
             // gives volume at this instance of the song.
             var vol = amp.getLevel();
             volhistory.push(vol)
@@ -132,6 +132,13 @@ function draw() {
             fill(0, 0, 255);
             endShape(CLOSE);
             pop();
+}
+
+function draw() {
+    if (song.isPlaying() === true) {
+        if (song.isPaused() === false) {
+            background(0, 119, 190);
+            MakeWave();
 
             //This will change based on the size of the canvas.
             if (followSong === true) {
@@ -154,14 +161,7 @@ function draw() {
             background(0, 119, 190);
             modifiedDrawGraph();
             // Modified version of follow line.
-            fill(255, 0, 0);
-            endCounter++;
-            var Characterx = endCounter;
-            var squareLength = 20;
-            xpos = 1 + Characterx * 3 - squareLength / 2;
-            var yVal = map(volhistory[Characterx], 0, 1, height / 2, 0) - 20;
-            ypos = yVal;
-            rect(1 + Characterx * 3 - squareLength / 2, yVal, squareLength, squareLength);
+            modifiedFollowLine();
         } else {
             aintOver = false;
         }
@@ -173,6 +173,18 @@ function draw() {
 
         }
     }
+}
+
+
+function modifiedFollowLine() {
+     fill(255, 0, 0);
+            endCounter++;
+            var Characterx = endCounter;
+            var squareLength = 20;
+            xpos = 1 + Characterx * 3 - squareLength / 2;
+            var yVal = map(volhistory[Characterx], 0, 1, height / 2, 0) - 20;
+            ypos = yVal;
+            rect(1 + Characterx * 3 - squareLength / 2, yVal, squareLength, squareLength);
 }
 
 
@@ -227,7 +239,6 @@ function CreateSpawner() {
                     TrashCounter++;
                 } else if (SpawnerArray[i].shark === true){
                     if (TrashCounter - TRASHSUBTRACTER > 0) {
-                        console.log("Less trash");
                         TrashCounter -= TRASHSUBTRACTER;
                     } else {
                         TrashCounter = 0;
